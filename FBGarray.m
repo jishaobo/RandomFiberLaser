@@ -1,8 +1,8 @@
 clear all;
 clc;
 %-------------变量定义-------------------------------  
-pointnum = 2000; %设定光谱点数
-secnum = 1000; %阵列中光栅个数
+pointnum = 1000; %设定光谱点数
+secnum = 100; %阵列中光栅个数
 lambda = 1e-9*linspace(1545,1555,pointnum);
 n_eff = 1.4452; %n_eff---------------纤芯有效折射率
 L = 0.1*1e-2; %L-----------------------光栅长度(cm)
@@ -56,22 +56,29 @@ logfinalR = 10*log10(finalR);
 plot(lambda*1e9,logfinalR);
 xlim([1545,1555]);
 title('随机分布光栅阵列')
-%------------均匀分布光栅阵列----------------
-for a = 1:pointnum
-    for b = 1:secnum
-        m_g = transmission_matrix(L,s,n_eff,n_eff0,lambda,a,lambda_Brag);  
-        m_d = [exp(-1i*k(a)*refspacing(b)) 0;0 exp(1i*k(a)*refspacing(b))]; %间隔传输矩阵
-        if b == 1
-            m_total = m_d*m_g;
-        else
-            m_total = m_d*m_g*m_total;
-        end
-        refr(a) = m_total(2,1)/m_total(1,1);%单个光栅振幅反射率
-        refR(a) = (abs(refr(a)))^2;%单个光栅光强反射率
-    end
-end
-subplot(1,3,3);
-logrefR = 10*log10(refR);
-plot(lambda*1e9,logrefR);
-xlim([1545,1555]);
-title('均匀分布光栅阵列')
+% %------------均匀分布光栅阵列----------------
+% for a = 1:pointnum
+%     for b = 1:secnum
+%         m_g = transmission_matrix(L,s,n_eff,n_eff0,lambda,a,lambda_Brag);  
+%         m_d = [exp(-1i*k(a)*refspacing(b)) 0;0 exp(1i*k(a)*refspacing(b))]; %间隔传输矩阵
+%         if b == 1
+%             m_total = m_d*m_g;
+%         else
+%             m_total = m_d*m_g*m_total;
+%         end
+%         refr(a) = m_total(2,1)/m_total(1,1);%单个光栅振幅反射率
+%         refR(a) = (abs(refr(a)))^2;%单个光栅光强反射率
+%     end
+% end
+% subplot(1,3,3);
+% logrefR = 10*log10(refR);
+% plot(lambda*1e9,logrefR);
+% xlim([1545,1555]);
+% title('均匀分布光栅阵列')
+
+%------------调整数据结构----------------
+lambda = (lambda*10^9)';
+logR = logR';
+logfinalR = logfinalR';
+% logrefR = logrefR';
+
