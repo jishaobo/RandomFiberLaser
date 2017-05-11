@@ -16,8 +16,8 @@ disp('光栅调制深度为：');disp(n_eff0);
 disp('布拉格光栅的中心波长为');disp(lambda_Brag);
 disp('布拉格光栅的长度为：');disp(L);
 %==============光栅仿真==============
-spacing = (rand(1,secnum)+0.5)*L; %随机间隔 0.5倍栅长-1.5倍栅长
-refspacing = ones(1,secnum)*L;
+spacing = (rand(1,secnum)*0.0001+1)*L; %随机间隔 0.5倍栅长-1.5倍栅长
+% refspacing = ones(1,secnum)*L;
 %--------------单个光栅---------------
 for a = 1:pointnum
     m_g = transmission_matrix(L,s,n_eff,n_eff0,lambda,a,lambda_Brag);  
