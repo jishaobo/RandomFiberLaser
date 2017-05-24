@@ -63,4 +63,5 @@ target/
 *.asv
 *.doc
 *.docx
+*.txt
 result/
